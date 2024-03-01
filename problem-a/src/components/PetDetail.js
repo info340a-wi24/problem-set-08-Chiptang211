@@ -1,19 +1,21 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
+import { useParams } from 'react-router-dom';
 
 import _ from 'lodash';
 
 import SAMPLE_DOGS from '../data/dogs.json'; //a sample list of dogs (model)
 
 function PetDetail(props) {
+  const { petName } = useParams();
 
   const petNameString = ''; //REPLACE THIS WITH CORRECT VALUE
 
   //pretend we loaded external data    
-  let pet =  _.find(SAMPLE_DOGS, {name: petNameString}); //find pet in data
+  const pet = props.pets.find(p => p.name === petName); //find pet in data
 
-  if(!pet) return <h2>No pet specified</h2> //if unspecified
+  if (!pet) return <h2>No pet specified</h2>; //if unspecified
 
   //make a bootstrap carousel (because its fun)
   let carouselItems = pet.images.map(function(img){

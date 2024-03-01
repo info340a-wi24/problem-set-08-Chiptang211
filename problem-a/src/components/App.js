@@ -1,4 +1,6 @@
 import React from 'react'; //import React Component
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
+
 import { AboutNav } from './Nav';
 import PetPage from './PetPage';
 import PetList from './PetList';
@@ -16,7 +18,7 @@ function App(props) {
     <div>
       <header className="jumbotron py-4 mb-4">
         <div className="container">
-          <h1>Adopt a Pet</h1>
+        <h1><Link to="/adopt" style={{ textDecoration: 'none', color: 'inherit' }}>Adopt a Pet</Link></h1>
         </div>
       </header>
     
@@ -26,7 +28,15 @@ function App(props) {
             <AboutNav />
           </div>
           <div className="col">
-            <PetList pets={pets} />
+            <Routes>
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/resources" element={<ResourcesPage />} />
+              <Route path="/adopt" element={<PetPage />}>
+                <Route path=":petName" element={<PetDetail pets={pets} />} />
+                <Route index element={<PetList pets={pets} />} />
+              </Route>
+              <Route path="*" element={<Navigate to="/adopt" replace />} />
+            </Routes>
           </div>
         </div>
       </main>
